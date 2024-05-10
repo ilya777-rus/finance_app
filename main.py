@@ -155,7 +155,8 @@ class PersonalTracker:
         for record in self.records:
             flag = True
             for key, value in kwargs.items():
-                if (value is not None or value=='') and getattr(record, key)!=value:
+                value = None if value=='' else value
+                if value is not None and getattr(record, key)!=value:
                     flag=False
                     break
             if flag:
@@ -288,13 +289,11 @@ class ConsoleInterface:
     def add_record(self,args)->None:
         """
         Добавляет новую запись в финансовый учет.
-
         """
         while True:
             print("======================")
             date = input("Введите дату для добавления в формате YYYY-MM-DD или нажмите Enter без изменения: ").strip()
             date = self.check_date(date)
-            print(date)
             if date or date==None:
                 break
 
@@ -326,7 +325,6 @@ class ConsoleInterface:
         Редактирует определенную запись по id.
         """
         print('welcome\n')
-
         while True:
             id_input = input("Введите id для редактирования или нажмите Enter без изменения: ").strip()
             id = self.check_id(id_input)
@@ -336,9 +334,8 @@ class ConsoleInterface:
         while True:
             date = input("Введите дату для редактирования в формате YYYY-MM-DD или нажмите Enter без изменения: ").strip()
             date = self.check_date(date, flag=True)
-            print(date)
+
             if date or date==None:
-                print('whileeeeeeeeeeeeeeeeeeee')
                 break
 
         while True:
@@ -364,7 +361,7 @@ class ConsoleInterface:
         else:
             print("Запись отредактировать не удалось (((")
 
-    def search_records(self,args)->None:
+    def search_records(self,args=None)->None:
         """
         Производит поиск записей по одному из параметров дата, категория или сумма.
 
@@ -373,7 +370,6 @@ class ConsoleInterface:
             print("======================")
             date = input("Введите дату для поиска в формате YYYY-MM-DD или нажмите Enter без изменения: ").strip()
             date = self.check_date(date, flag=True)
-            print(date)
             if date or date==None:
                 print('whileeeeeeeeeeeeeeeeeeee')
                 break
